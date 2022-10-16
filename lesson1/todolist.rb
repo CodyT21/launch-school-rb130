@@ -116,6 +116,10 @@ class TodoList
     @todos.each { |todo| output << todo.to_s }
     output.join("\n")
   end
+
+  def each
+    @todos.each { |todo| yield(todo) }
+  end
 end
 
 
@@ -129,12 +133,16 @@ list.add(todo1)
 list.add(todo2)
 list.add(todo3)
 
-puts list
+# puts list
 
-list.pop
+# list.pop
 
-puts list
+# puts list
 
-list.mark_done_at(1)
+# list.mark_done_at(1)
 
-puts list
+# puts list
+
+list.each do |todo|
+  puts todo                   # calls Todo#to_s
+end

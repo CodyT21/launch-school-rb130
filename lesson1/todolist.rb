@@ -119,10 +119,11 @@ class TodoList
 
   def each
     @todos.each { |todo| yield(todo) }
+    self
   end
 
   def select
-    results = []
+    results = TodoList.new(title)
     each { |todo| results << todo if yield(todo) }
     results
   end

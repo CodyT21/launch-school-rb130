@@ -127,6 +127,31 @@ class TodoList
     each { |todo| results << todo if yield(todo) }
     results
   end
+
+  def find_by_title(pattern)
+    select { |todo| todo.title.downcase =~ /#{pattern.downcase}/ }.first
+  end
+
+  def all_done
+    select { |todo| todo.done? }
+  end
+
+  def all_not_done
+    select { |todo| !todo.done? }
+  end 
+
+  def mark_done(pattern)
+    find_by_title(pattern).done!
+  end
+
+  def mark_all_done
+    each { |todo| todo.done! }
+  end
+
+  def mark_all_undone
+    each { |todo| todo.undone! }
+  end
+  
 end
 
 
@@ -150,12 +175,23 @@ list.add(todo3)
 
 # puts list
 
-list.each do |todo|
-  puts todo                   # calls Todo#to_s
-end
+# list.each do |todo|
+#   puts todo                   # calls Todo#to_s
+# end
 
-todo1.done!
+# todo1.done!
 
-results = list.select { |todo| todo.done? }    # you need to implement this method
+# results = list.select { |todo| todo.done? }    # you need to implement this method
 
-puts results.inspect
+# puts results.inspect
+
+# p list.find_by_title('clean')
+# list.mark_done('gym')
+
+list.mark_all_done
+puts list.all_done
+puts list.all_not_done
+
+list.mark_all_undone
+puts list.all_done
+puts list.all_not_done
